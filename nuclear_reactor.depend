@@ -1,10 +1,11 @@
 # depslib dependency file v1.0
-1679843276 source:d:\nuclear_reactor\nuclear_reactor\main.cpp
+1681936345 source:d:\nuclear_reactor\nuclear_reactor\main.cpp
 	<stdio.h>
 	<stdlib.h>
 	<GL/glut.h>
 	<math.h>
 	<Windows.h>
+	<mmsystem.h>
 
 1526093414 e:\codeblocks\mingw\x86_64-w64-mingw32\include\stdio.h
 	<crtdefs.h>
@@ -898,4 +899,20 @@
 
 1526093416 e:\codeblocks\mingw\x86_64-w64-mingw32\include\math.h
 	<crtdefs.h>
+
+1526093414 e:\codeblocks\mingw\x86_64-w64-mingw32\include\time.h
+	<crtdefs.h>
+	<_timeval.h>
+	<sys/timeb.h>
+	<pthread_time.h>
+
+1526093414 e:\codeblocks\mingw\x86_64-w64-mingw32\include\sys\timeb.h
+	<crtdefs.h>
+	<sec_api/sys/timeb_s.h>
+
+1526093414 e:\codeblocks\mingw\x86_64-w64-mingw32\include\sec_api\sys\timeb_s.h
+	<sys/timeb.h>
+
+1526093420 e:\codeblocks\mingw\x86_64-w64-mingw32\include\pthread_time.h
+	<sys/timeb.h>
 

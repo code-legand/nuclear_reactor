@@ -3,6 +3,9 @@
 #include<GL/glut.h>
 #include<math.h>
 #include<Windows.h>
+//#include <mmsystem.h>
+
+//#pragma comment(lib, "winmm.lib")
 
 void *font;
 void *currentfont;
@@ -14,13 +17,31 @@ float x2,y2,r,r1=80,r2=5.0,r3=27.5,r4=6,r5=6,x,y,angle,angle_radians,r6=23,r7=2,
 int k=0;
 int p=0;
 
-void delay(int x)
-{
-    int i,j;
-    for(i=0; i<x; i++)
-    {
-        for(j=0; j<i*1000; j++)
-            ;
+int theta=0;
+int start=0;
+int depth=0 ;
+
+void animate(){
+    theta=theta+10*(depth)/5;
+    if(theta>360){
+        theta=0;
+    }
+
+        start=start+1*depth;
+
+    glutPostRedisplay();
+}
+
+void changedepth(unsigned char ch, int x, int y){
+    if(ch=='w'){
+        if(depth<5){
+            depth++;
+        }
+    }
+    if(ch=='s'){
+        if(depth>0){
+            depth--;
+        }
     }
 }
 
@@ -241,7 +262,7 @@ void display()
     }
 
     // control rods
-    for(i=85; i<200; i=i+5)
+    for(i=85+(20*depth); i<200+(20*depth); i=i+5)
     {
         glBegin(GL_LINE_STRIP);
         for( int angle=0; angle<=360; angle=angle+5)
@@ -255,7 +276,7 @@ void display()
         }
         glEnd();
     }
-    for(i=85; i<200; i=i+5)
+    for(i=85+(20*depth); i<200+(20*depth); i=i+5)
     {
         glBegin(GL_LINE_STRIP);
         for( int angle=0; angle<=360; angle=angle+5)
@@ -269,7 +290,7 @@ void display()
         }
         glEnd();
     }
-    for(i=85; i<200; i=i+5)
+    for(i=85+(20*depth); i<200+(20*depth); i=i+5)
     {
         glBegin(GL_LINE_STRIP);
         for( int angle=0; angle<=360; angle=angle+5)
@@ -545,19 +566,22 @@ void display()
     glPushMatrix();
     glTranslatef(230, 135, -200);
     glRotatef(90, 0, 1, 0);
-    gluCylinder(quadratic4, 35, 45, 15, 32, 32);
+        glRotatef(theta*4, 0, 0, 1);
+    gluCylinder(quadratic4, 35, 45, 15, 8, 32);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(230, 135, -200);
     glRotatef(90, 0, 1, 0);
-    gluDisk(quadratic, 0.0, 35, 32, 1);
+        glRotatef(theta*4, 0, 0, 1);
+    gluDisk(quadratic, 0.0, 35, 8, 1);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(245, 135, -200);
     glRotatef(90, 0, 1, 0);
-    gluDisk(quadratic, 0.0, 45, 32, 1);
+        glRotatef(theta*4, 0, 0, 1);
+    gluDisk(quadratic, 0.0, 45, 8, 1);
     glPopMatrix();
 
 //    blade 2
@@ -568,19 +592,22 @@ void display()
     glPushMatrix();
     glTranslatef(260, 135, -200);
     glRotatef(90, 0, 1, 0);
-    gluCylinder(quadratic5, 45, 55, 15, 32, 32);
+        glRotatef(theta*3, 0, 0, 1);
+    gluCylinder(quadratic5, 45, 55, 15, 8, 32);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(260, 135, -200);
     glRotatef(90, 0, 1, 0);
-    gluDisk(quadratic, 0.0, 45, 32, 1);
+        glRotatef(theta*3, 0, 0, 1);
+    gluDisk(quadratic, 0.0, 45, 8, 1);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(275, 135, -200);
     glRotatef(90, 0, 1, 0);
-    gluDisk(quadratic, 0.0, 55, 32, 1);
+        glRotatef(theta*3, 0, 0, 1);
+    gluDisk(quadratic, 0.0, 55, 8, 1);
     glPopMatrix();
 
 //    blade3
@@ -591,19 +618,22 @@ void display()
     glPushMatrix();
     glTranslatef(290, 135, -200);
     glRotatef(90, 0, 1, 0);
-    gluCylinder(quadratic6, 55, 65, 15, 32, 32);
+        glRotatef(theta*2, 0, 0, 1);
+    gluCylinder(quadratic6, 55, 65, 15, 8, 32);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(290, 135, -200);
     glRotatef(90, 0, 1, 0);
-    gluDisk(quadratic, 0.0, 55, 32, 1);
+        glRotatef(theta*2, 0, 0, 1);
+    gluDisk(quadratic, 0.0, 55, 8, 1);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(305, 135, -200);
     glRotatef(90, 0, 1, 0);
-    gluDisk(quadratic, 0.0, 65, 32, 1);
+        glRotatef(theta*2, 0, 0, 1);
+    gluDisk(quadratic, 0.0, 65, 8, 1);
     glPopMatrix();
 
 
@@ -616,19 +646,22 @@ void display()
     glPushMatrix();
     glTranslatef(320, 135, -200);
     glRotatef(90, 0, 1, 0);
-    gluCylinder(quadratic7, 65, 75, 15, 32, 32);
+        glRotatef(theta, 0, 0, 1);
+    gluCylinder(quadratic7, 65, 75, 15, 8, 32);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(320, 135, -200);
     glRotatef(90, 0, 1, 0);
-    gluDisk(quadratic, 0.0, 65, 32, 1);
+        glRotatef(theta, 0, 0, 1);
+    gluDisk(quadratic, 0.0, 65, 8, 1);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(335, 135, -200);
     glRotatef(90, 0, 1, 0);
-    gluDisk(quadratic, 0.0, 75, 32, 1);
+        glRotatef(theta, 0, 0, 1);
+    gluDisk(quadratic, 0.0, 75, 8, 1);
     glPopMatrix();
 
 //    joint1
@@ -639,7 +672,8 @@ void display()
     glPushMatrix();
     glTranslatef(245, 135, -200);
     glRotatef(90, 0, 1, 0);
-    gluCylinder(quadratic8, 25, 25, 15, 4, 32);
+    glRotatef(theta*3.5, 0, 0, 1);
+    gluCylinder(quadratic8, 25, 25, 15, 8, 32);
     glPopMatrix();
 
 //    joint2
@@ -650,7 +684,8 @@ void display()
     glPushMatrix();
     glTranslatef(275, 135, -200);
     glRotatef(90, 0, 1, 0);
-    gluCylinder(quadratic9, 35, 35, 15, 4, 32);
+    glRotatef(theta*2.5, 0, 0, 1);
+    gluCylinder(quadratic9, 35, 35, 15, 8, 32);
     glPopMatrix();
 
 //    joint3
@@ -661,7 +696,8 @@ void display()
     glPushMatrix();
     glTranslatef(305, 135, -200);
     glRotatef(90, 0, 1, 0);
-    gluCylinder(quadratic10, 45, 45, 15, 4, 32);
+    glRotatef(theta*1.5, 0, 0, 1);
+    gluCylinder(quadratic10, 45, 45, 15, 8, 32);
     glPopMatrix();
 
     // Disable lighting
@@ -962,6 +998,23 @@ void display()
         }
         glEnd();
     }
+    glColor3f(0, 0, 0);
+    GLUquadricObj* quadratic16;
+    quadratic16 = gluNewQuadric();
+    gluQuadricNormals(quadratic16, GLU_SMOOTH);
+    gluQuadricTexture(quadratic16, GL_TRUE);
+    glPushMatrix();
+    glTranslatef(350, 314, -300);
+    glRotatef(90, 1, 0, 0);
+    gluDisk(quadratic16, 0.0, 20, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(350, 314, -200);
+    glRotatef(90, 1, 0, 0);
+    gluDisk(quadratic16, 0.0, 20, 32, 1);
+    glPopMatrix();
+
 
 // from condensor
     for(i=300; i<595; i=i+1)
@@ -1301,7 +1354,6 @@ void display()
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     glPushMatrix();
-    glColor4f(0.1f, 0.4f, 1.0f, 0.6f);
 
     glColor4f(0.1f, 0.4f, 1.0f, 0.6f);
     for(i=450; i<800; i=i+1)
@@ -1394,6 +1446,8 @@ void display()
     // set1
     glPushMatrix();
     glTranslatef(400, 135, -200);
+        glRotatef(theta, 1, 0, 0);
+
 
     glRotatef(0, 1, 0, 0);
     gluCylinder(quadratic15, 5, 10, 40.0f, 6, 32);
@@ -1425,6 +1479,7 @@ void display()
     // set2
     glPushMatrix();
     glTranslatef(420, 135, -200);
+            glRotatef(theta+120, 1, 0, 0);
 
     glRotatef(0, 1, 0, 0);
     gluCylinder(quadratic15, 5, 10, 40.0f, 6, 32);
@@ -1456,6 +1511,7 @@ void display()
     // set3
     glPushMatrix();
     glTranslatef(440, 135, -200);
+        glRotatef(theta+240, 1, 0, 0);
 
     glRotatef(0, 1, 0, 0);
     gluCylinder(quadratic15, 5, 10, 40.0f, 6, 32);
@@ -1571,6 +1627,806 @@ void display()
         glEnd();
     }
 
+//    water flow
+// bottom reactor fluid
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    GLUquadricObj* cylinder3 = gluNewQuadric();
+    gluQuadricNormals(cylinder3, GLU_SMOOTH);
+    gluQuadricTexture(cylinder3, GL_FALSE);
+    gluQuadricDrawStyle(cylinder3, GLU_FILL);
+
+    glColor4f(0.5f, 0.5f, 1.0f, 0.6f); // blue color with alpha value of 0.5
+
+    glPushMatrix();
+    glTranslatef(-35-(start%30), -35, -200);
+    glRotatef(90, 0, 1, 0);
+    gluCylinder(cylinder3, 10.0f, 10.0f, 15.0, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(-5-(start%30), -35, -200);
+    glRotatef(90, 0, 1, 0);
+    gluCylinder(cylinder3, 10.0f, 10.0f, 15.0f, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(25-(start%30), -35, -200);
+    glRotatef(90, 0, 1, 0);
+    gluCylinder(cylinder3, 10.0f, 10.0f, 15.0f, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(55-(start%30), -35, -200);
+    glRotatef(90, 0, 1, 0);
+    gluCylinder(cylinder3, 10.0f, 10.0f, 15.0f, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(85-(start%30), -35, -200);
+    glRotatef(90, 0, 1, 0);
+    gluCylinder(cylinder3, 10.0f, 10.0f, 15.0f, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(115-(start%30), -35, -200);
+    glRotatef(90, 0, 1, 0);
+    gluCylinder(cylinder3, 10.0f, 10.0f, 15.0f, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(145-(start%30), -35, -200);
+    glRotatef(90, 0, 1, 0);
+    if(145-(start%30)<=130){
+        gluCylinder(cylinder3, 10.0f, 10.0f, start%15, 32, 1);
+    }
+    glPopMatrix();
+
+// right reactor fluid
+    glPushMatrix();
+    glTranslatef(-70, -45+(start%30), -200);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 5.0f, 5.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(-70, -15+(start%30), -200);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 5.0f, 5.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(-70, 15+(start%30), -200);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 5.0f, 5.0f, 15, 32, 1);
+    glPopMatrix();
+
+        glPushMatrix();
+    glTranslatef(-70, 45+(start%30), -200);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 5.0f, 5.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(-70, 75+(start%30), -200);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 5.0f, 5.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(-70, 105+(start%30), -200);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 5.0f, 5.0f, 15, 32, 1);
+    glPopMatrix();
+
+        glPushMatrix();
+    glTranslatef(-70, 135+(start%30), -200);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 5.0f, 5.0f, 15-(start%30), 32, 1);
+    glPopMatrix();
+
+
+// top in reactor fluid
+    glPushMatrix();
+    glTranslatef(-70+(start%30), 155, -200);
+    glRotatef(90, 0, 1, 0);
+    gluCylinder(cylinder3, 10.0f, 10.0f, 15, 32, 1);
+    glPopMatrix();
+
+// top out reactor fluid
+    glPushMatrix();
+    glTranslatef(0+(start%30), 210, -200);
+    glRotatef(90, 0, 1, 0);
+    gluCylinder(cylinder3, 10.0f, 10.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(30+(start%30), 210, -200);
+    glRotatef(90, 0, 1, 0);
+    gluCylinder(cylinder3, 10.0f, 10.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(60+(start%30), 210, -200);
+    glRotatef(90, 0, 1, 0);
+    gluCylinder(cylinder3, 10.0f, 10.0f, 15-(start%30), 32, 1);
+    glPopMatrix();
+
+
+// left reactor fluid
+    glPushMatrix();
+    glTranslatef(80, 220-(start%30), -200);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 5.0f, 5.0f, start%30, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(80, 190-(start%30), -200);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 5.0f, 5.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(80, 160-(start%30), -200);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 5.0f, 5.0f, 15, 32, 1);
+    glPopMatrix();
+
+        glPushMatrix();
+    glTranslatef(80, 130-(start%30), -200);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 5.0f, 5.0f, 15, 32, 1);
+    glPopMatrix();
+
+        glPushMatrix();
+    glTranslatef(80, 100-(start%30), -200);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 5.0f, 5.0f, 15, 32, 1);
+    glPopMatrix();
+
+        glPushMatrix();
+    glTranslatef(80, 70-(start%30), -200);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 5.0f, 5.0f, 15-(start%30), 32, 1);
+    glPopMatrix();
+
+// mid exchanger reactor fluid
+    glPushMatrix();
+    glTranslatef(80+(start%30), 40, -200);
+    glRotatef(90, 0, 1, 0);
+    gluCylinder(cylinder3, 8.0f, 8.0f, 15, 32, 1);
+    glPopMatrix();
+
+        glPushMatrix();
+    glTranslatef(110+(start%30), 40, -200);
+    glRotatef(90, 0, 1, 0);
+    gluCylinder(cylinder3, 8.0f, 8.0f, 15-(start%30), 32, 1);
+    glPopMatrix();
+
+// left down exchanger reactor fluid
+    glPushMatrix();
+    glTranslatef(125, 60-(start%30), -200);
+    glRotatef(-90, 1, 0, 0);
+    if(start%30>15){
+        gluCylinder(cylinder3, 5.0f, 5.0f, (start%15), 32, 1);
+    }
+    glPopMatrix();
+
+        glPushMatrix();
+    glTranslatef(125, 30-(start%30), -200);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 5.0f, 5.0f, 15, 32, 1);
+    glPopMatrix();
+
+        glPushMatrix();
+    glTranslatef(125, 0-(start%30), -200);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 5.0f, 5.0f, 15, 32, 1);
+    glPopMatrix();
+
+
+    glColor4f(0.1f, 0.4f, 1.0f, 0.4f);
+// mid exchanger water
+    glPushMatrix();
+    glTranslatef(110-(start%30), 100, -200);
+    glRotatef(90, 0, 1, 0);
+    gluCylinder(cylinder3, 8.0f, 8.0f, 15, 32, 1);
+    glPopMatrix();
+
+        glPushMatrix();
+    glTranslatef(140-(start%30), 100, -200);
+    glRotatef(90, 0, 1, 0);
+    gluCylinder(cylinder3, 8.0f, 8.0f, 15, 32, 1);
+    glPopMatrix();
+
+        glPushMatrix();
+    glTranslatef(180-(start%30), 100, -200);
+    glRotatef(90, 0, 1, 0);
+    gluCylinder(cylinder3, 8.0f, 8.0f, 15-(start%30), 32, 1);
+    glPopMatrix();
+
+        glPushMatrix();
+    glTranslatef(210-(start%30), 100, -200);
+    glRotatef(90, 0, 1, 0);
+    if(210-(start%30)<=195){
+        gluCylinder(cylinder3, 10.0f, 10.0f, start%15, 32, 1);
+    }
+    glPopMatrix();
+
+// left down exchanger water
+    glPushMatrix();
+    glTranslatef(200, 95+(start%30), -200);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 5.0f, 5.0f, 15-(start%30), 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(200, 65+(start%30), -200);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 5.0f, 5.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(200, 35+(start%30), -200);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 5.0f, 5.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(200, 5+(start%30), -200);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 5.0f, 5.0f, 15, 32, 1);
+    glPopMatrix();
+
+        glPushMatrix();
+    glTranslatef(200, -25+(start%30), -200);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 5.0f, 5.0f, 15, 32, 1);
+    glPopMatrix();
+
+// bottom exchanger water
+    glPushMatrix();
+    glTranslatef(195, -30, -200);
+    glRotatef(90, 0, 1, 0);
+    gluCylinder(cylinder3, 8.0f, 8.0f, 15-(start%30), 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(225-(start%30), -30, -200);
+    glRotatef(90, 0, 1, 0);
+    gluCylinder(cylinder3, 8.0f, 8.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(255-(start%30), -30, -200);
+    glRotatef(90, 0, 1, 0);
+    gluCylinder(cylinder3, 8.0f, 8.0f, 15, 32, 1);
+    glPopMatrix();
+
+
+// bottom inlet clean water
+    glPushMatrix();
+    glTranslatef(500-(start%30), -35, -200);
+    glRotatef(90, 0, 1, 0);
+    gluCylinder(cylinder3, 18.0f, 18.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(500-(start%30), -35, -200);
+    glRotatef(90, 0, 1, 0);
+    gluCylinder(cylinder3, 18.0f, 18.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(470-(start%30), -35, -200);
+    glRotatef(90, 0, 1, 0);
+    gluCylinder(cylinder3, 18.0f, 18.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(440-(start%30), -35, -200);
+    glRotatef(90, 0, 1, 0);
+    gluCylinder(cylinder3, 18.0f, 18.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(410-(start%30), -35, -200);
+    glRotatef(90, 0, 1, 0);
+    gluCylinder(cylinder3, 18.0f, 18.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(380-(start%30), -35, -200);
+    glRotatef(90, 0, 1, 0);
+    gluCylinder(cylinder3, 18.0f, 18.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(350-(start%30), -35, -200);
+    glRotatef(90, 0, 1, 0);
+    gluCylinder(cylinder3, 18.0f, 18.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(320-(start%30), -35, -200);
+    glRotatef(90, 0, 1, 0);
+    gluCylinder(cylinder3, 18.0f, 18.0f, 15, 32, 1);
+    glPopMatrix();
+
+
+
+// bottom behind inlet clean water
+    glPushMatrix();
+    glTranslatef(500-(start%30), -35, -250);
+    glRotatef(90, 0, 1, 0);
+    gluCylinder(cylinder3, 18.0f, 18.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(500-(start%30), -35, -250);
+    glRotatef(90, 0, 1, 0);
+    gluCylinder(cylinder3, 18.0f, 18.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(470-(start%30), -35, -250);
+    glRotatef(90, 0, 1, 0);
+    gluCylinder(cylinder3, 18.0f, 18.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(440-(start%30), -35, -250);
+    glRotatef(90, 0, 1, 0);
+    gluCylinder(cylinder3, 18.0f, 18.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(410-(start%30), -35, -250);
+    glRotatef(90, 0, 1, 0);
+    gluCylinder(cylinder3, 18.0f, 18.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(380-(start%30), -35, -250);
+    glRotatef(90, 0, 1, 0);
+    gluCylinder(cylinder3, 18.0f, 18.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(350-(start%30), -35, -250);
+    glRotatef(90, 0, 1, 0);
+    gluCylinder(cylinder3, 18.0f, 18.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(320-(start%30), -35, -250);
+    glRotatef(90, 0, 1, 0);
+    gluCylinder(cylinder3, 18.0f, 18.0f, 15, 32, 1);
+    glPopMatrix();
+
+// above inlet clean water
+    glPushMatrix();
+    glTranslatef(430+(start%30), 405, -200);
+    glRotatef(90, 0, 1, 0);
+    gluCylinder(cylinder3,18.0f, 18.0f, 15, 32, 1);
+    glPopMatrix();
+
+        glPushMatrix();
+    glTranslatef(460+(start%30), 405, -200);
+    glRotatef(90, 0, 1, 0);
+    gluCylinder(cylinder3,18.0f, 18.0f, 15, 32, 1);
+    glPopMatrix();
+
+// above behind inlet clean water
+    glPushMatrix();
+    glTranslatef(430+(start%30), 405, -250);
+    glRotatef(90, 0, 1, 0);
+    gluCylinder(cylinder3,18.0f, 18.0f, 15, 32, 1);
+    glPopMatrix();
+
+        glPushMatrix();
+    glTranslatef(460+(start%30), 405, -250);
+    glRotatef(90, 0, 1, 0);
+    gluCylinder(cylinder3,18.0f, 18.0f, 15, 32, 1);
+    glPopMatrix();
+
+// left inlet clean water
+    glPushMatrix();
+    glTranslatef(500, 415-(start%30), -200);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 11.0f, 11.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(500, 385-(start%30), -200);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 11.0f, 11.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(500, 355-(start%30), -200);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 11.0f, 11.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(500, 325-(start%30), -200);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 11.0f, 11.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(500, 295-(start%30), -200);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 11.0f, 11.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(500, 265-(start%30), -200);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 11.0f, 11.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(500, 235-(start%30), -200);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 11.0f, 11.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(500, 415-(start%30), -200);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 11.0f, 11.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(500, 205-(start%30), -200);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 11.0f, 11.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(500, 175-(start%30), -200);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 11.0f, 11.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(500, 145-(start%30), -200);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 11.0f, 11.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(500, 115-(start%30), -200);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 11.0f, 11.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(500, 85-(start%30), -200);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 11.0f, 11.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(500, 55-(start%30), -200);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 11.0f, 11.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(500, 25-(start%30), -200);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 11.0f, 11.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(500, -5-(start%30), -200);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 11.0f, 11.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(500, -35-(start%30), -200);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 11.0f, 11.0f, 15, 32, 1);
+    glPopMatrix();
+
+// left behind inlet clean water
+    glPushMatrix();
+    glTranslatef(500, 415-(start%30), -250);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 11.0f, 11.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(500, 385-(start%30), -250);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 11.0f, 11.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(500, 355-(start%30), -250);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 11.0f, 11.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(500, 325-(start%30), -250);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 11.0f, 11.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(500, 295-(start%30), -250);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 11.0f, 11.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(500, 265-(start%30), -250);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 11.0f, 11.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(500, 235-(start%30), -250);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 11.0f, 11.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(500, 415-(start%30), -250);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 11.0f, 11.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(500, 205-(start%30), -250);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 11.0f, 11.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(500, 175-(start%30), -250);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 11.0f, 11.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(500, 145-(start%30), -250);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 11.0f, 11.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(500, 115-(start%30), -250);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 11.0f, 11.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(500, 85-(start%30), -250);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 11.0f, 11.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(500, 55-(start%30), -250);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 11.0f, 11.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(500, 25-(start%30), -250);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 11.0f, 11.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(500, -5-(start%30), -250);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 11.0f, 11.0f, 15, 32, 1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(500, -35-(start%30), -250);
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(cylinder3, 11.0f, 11.0f, 15, 32, 1);
+    glPopMatrix();
+
+
+    gluDeleteQuadric(cylinder3);
+    glDisable(GL_BLEND);
+
+
+//    steam
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glColor4f(0.6f, 0.6f, 0.8f, 0.8f);
+    glPointSize(2);
+
+    //exchanger
+    for (int i = 0; i < 100+(200*depth); i++)
+    {
+        // Generate random coordinates within the viewport
+        int x = rand() % 39;
+        int y = rand() % 40;
+
+        // Draw a point at the random coordinates
+        glBegin(GL_POINTS);
+        glVertex2i(105+x, 180+y);
+        glEnd();
+    }
+
+    //pipes
+    //top
+    for (int i = 0; i < 100+(200*depth); i++)
+    {
+        // Generate random coordinates within the viewport
+        int x = rand() % 49;
+        int y = rand() % 15;
+
+        // Draw a point at the random coordinates
+        glBegin(GL_POINTS);
+        glVertex2i(135+x, 200+y);
+        glEnd();
+    }
+
+    //down
+    for (int i = 0; i < 100+(200*depth); i++)
+    {
+        // Generate random coordinates within the viewport
+        int x = rand() % 12;
+        int y = rand() % 70;
+
+        // Draw a point at the random coordinates
+        glBegin(GL_POINTS);
+        glVertex2i(172+x, 147+y);
+        glEnd();
+    }
+
+    for (int i = 0; i < 100+(200*depth); i++)
+    {
+        // Generate random coordinates within the viewport
+        int x = rand() % 12;
+        int y = rand() % 44;
+
+        // Draw a point at the random coordinates
+        glBegin(GL_POINTS);
+        glVertex2i(172+x, 83+y);
+        glEnd();
+    }
+
+
+    //bottom
+    for (int i = 0; i < 100+(200*depth); i++)
+    {
+        // Generate random coordinates within the viewport
+        int x = rand() % 118;
+        int y = rand() % 18;
+
+        // Draw a point at the random coordinates
+        glBegin(GL_POINTS);
+        glVertex2i(172+x, 83+y);
+        glEnd();
+    }
+
+    //outlet 1
+    for (int i = 0; i < 100+(200*depth); i++)
+    {
+        // Generate random coordinates within the viewport
+        int x = rand() % 12;
+        int y = rand() % 120;
+
+        // Draw a point at the random coordinates
+        glBegin(GL_POINTS);
+        glVertex2i(220+x, 83+y);
+        glEnd();
+    }
+
+        //outlet 2
+    for (int i = 0; i < 100+(200*depth); i++)
+    {
+        // Generate random coordinates within the viewport
+        int x = rand() % 12;
+        int y = rand() % 130;
+
+        // Draw a point at the random coordinates
+        glBegin(GL_POINTS);
+        glVertex2i(239+x, 83+y);
+        glEnd();
+    }
+
+            //outlet 3
+    for (int i = 0; i < 100+(200*depth); i++)
+    {
+        // Generate random coordinates within the viewport
+        int x = rand() % 12;
+        int y = rand() % 140;
+
+        // Draw a point at the random coordinates
+        glBegin(GL_POINTS);
+        glVertex2i(258+x, 83+y);
+        glEnd();
+    }
+
+        //outlet 4
+    for (int i = 0; i < 100+(200*depth); i++)
+    {
+        // Generate random coordinates within the viewport
+        int x = rand() % 12;
+        int y = rand() % 150;
+
+        // Draw a point at the random coordinates
+        glBegin(GL_POINTS);
+        glVertex2i(277+x, 83+y);
+        glEnd();
+    }
+
+    // turbine room
+    for (int i = 0; i < 100+(200*depth); i++)
+    {
+        // Generate random coordinates within the viewport
+        int x = rand() % 160;
+        int y = rand() % 265;
+        int z = rand() % -200;
+
+        // Draw a point at the random coordinates
+        glBegin(GL_POINTS);
+        glVertex3i(215+x, -65+y, -150-z);
+        glEnd();
+    }
+
+    for (int i = 0; i < 100+(200*depth); i++)
+    {
+        // Generate random coordinates within the viewport
+        int x = rand() % 160;
+        int y = fmod(rand(), x);
+        int z = rand() % -200;
+
+        // Draw a point at the random coordinates
+        glBegin(GL_POINTS);
+        glVertex3i(215+x, 200+y, -150-z);
+        glEnd();
+    }
+
+    // steam vent to condensor
+        for (int i = 0; i < 100+(200*depth); i++)
+    {
+        // Generate random coordinates within the viewport
+        int x = rand() % 40;
+        int y = rand() % 250;
+
+        // Draw a point at the random coordinates
+        glBegin(GL_POINTS);
+        glVertex3i(330+x, 283+y, -200);
+        glEnd();
+    }
+
+    // steam vent behind to condensor
+        for (int i = 0; i < 100+(200*depth); i++)
+    {
+        // Generate random coordinates within the viewport
+        int x = rand() % 40;
+        int y = rand() % 250;
+
+        // Draw a point at the random coordinates
+        glBegin(GL_POINTS);
+        glVertex3i(330+x, 283+y, -200);
+        glEnd();
+    }
+
+
+
+
+
+
+
+
+    glDisable(GL_BLEND);
 
 
 
@@ -1581,6 +2437,8 @@ void display()
 
 int main(int argc, char** argv)
 {
+//    PlaySound("D:/nuclear_reactor/nuclear_reactor/audio.wav", NULL, SND_ASYNC);
+//    PlaySound(TEXT("D:\\nuclear_reactor\\nuclear_reactor\\audio.wav"), NULL, SND_SYNC);
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
     glutInitWindowPosition(0, 0);
@@ -1590,7 +2448,8 @@ int main(int argc, char** argv)
     glEnable(GL_DEPTH_TEST);
     gluOrtho2D(0.0,400.0,0.0,300.0);
     glutDisplayFunc(display);
-
+glutIdleFunc(animate);
+glutKeyboardFunc(changedepth);
     glutMainLoop();
 
     return 0;
